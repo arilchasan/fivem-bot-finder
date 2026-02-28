@@ -1,5 +1,10 @@
 require("dotenv").config();
-const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const {
+    Client,
+    GatewayIntentBits,
+    EmbedBuilder,
+    ActivityType,
+} = require("discord.js");
 const axios = require("axios");
 const express = require("express");
 const app = express();
