@@ -1,8 +1,18 @@
+require("dotenv").config();
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 const axios = require("axios");
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.send("Bot is running!");
+});
+app.listen(PORT, () => {
+  console.log("Web server aktif di port " + PORT);
+});
 
 // ===== CONFIG =====
-require("dotenv").config();
 const TOKEN = process.env.TOKEN;
 
 // ================= INIT CLIENT =================
@@ -73,6 +83,8 @@ async function getServerData(serverId) {
 client.once("ready", () => {
     console.log(`✅ Bot online sebagai ${client.user.tag}`);
 });
+
+client.login(process.env.TOKEN);
 
 // ================= COMMAND =================
 client.on("messageCreate", async (message) => {
@@ -352,5 +364,3 @@ client.on("messageCreate", async (message) => {
 }
 });
 
-// ================= LOGIN =================
-client.login(TOKEN);
