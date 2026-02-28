@@ -45,7 +45,7 @@ const servers = [
     { name: "Town Glorix VII", alias: "glorix", id: "bjyd8b" },
     { name: "SixNine", alias: "69", id: "pzll95" },
     { name: "VICTORIA RP", alias: "victoria", id: "3qjvrz" },
-    { name: "MERCY", alias: "mercy", id: "yoe9yy" },
+    { name: "MERCY", alias: "mercy", id: "xj9l5r" },
     { name: "ABRP", alias: "abrp", id: "7y66bb" },
     { name: "SATU MIMPI", alias: "sm", id: "3e3gdb" },
     { name: "KOTABARU", alias: "kotabaru", id: "mez5p7" },
