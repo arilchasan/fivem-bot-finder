@@ -82,6 +82,17 @@ async function getServerData(serverId) {
 // ================= READY =================
 client.once("ready", () => {
     console.log(`✅ Bot online sebagai ${client.user.tag}`);
+
+    client.user.setPresence({
+        activities: [
+            {
+                name: "customstatus",
+                type: ActivityType.Custom,
+                state: "Petunjuk: !com",
+            },
+        ],
+        status: "online",
+    });
 });
 
 client.login(process.env.TOKEN);
