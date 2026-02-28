@@ -6,10 +6,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
-  res.send("Bot is running!");
+    res.send("Bot is running!");
 });
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("Web server aktif di port " + PORT);
+    console.log("Web server aktif di port " + PORT);
 });
 
 // ===== CONFIG =====
@@ -20,8 +20,8 @@ const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
-    ]
+        GatewayIntentBits.MessageContent,
+    ],
 });
 
 // ================= SERVER LIST =================
@@ -43,7 +43,7 @@ const servers = [
     { name: "INDOZONE", alias: "indozone", id: "jadyla" },
     { name: "HOPE", alias: "hope", id: "ymzj4j" },
     { name: "Town Glorix VII", alias: "glorix", id: "bjyd8b" },
-    { name: "SixNine", alias: "69", id: "pzll95" },
+    { name: "SixNine", alias: "69", id: "eqgqzd" },
     { name: "VICTORIA RP", alias: "victoria", id: "3qjvrz" },
     { name: "MERCY", alias: "mercy", id: "xj9l5r" },
     { name: "ABRP", alias: "abrp", id: "7y66bb" },
@@ -63,7 +63,7 @@ const servers = [
     { name: "SUASANA BARU", alias: "suasanabaru", id: "g6b3xx" },
     { name: "VALORA", alias: "valora", id: "pbkkja" },
     { name: "CAKRA UNION", alias: "cakra", id: "xmdpve" },
-    { name: "RETORIKA", alias: "retorika", id: "6j4z5j" }
+    { name: "RETORIKA", alias: "retorika", id: "6j4z5j" },
 ];
 
 // ================= FUNCTION CFX =================
@@ -71,7 +71,7 @@ async function getServerData(serverId) {
     try {
         const res = await axios.get(
             `https://servers-frontend.fivem.net/api/servers/single/${serverId}`,
-            { timeout: 5000 }
+            { timeout: 5000 },
         );
         return res.data.Data;
     } catch (err) {
@@ -97,27 +97,25 @@ client.on("messageCreate", async (message) => {
     // 📋 SERVERLIST (KIRIM SEMUA HALAMAN)
     // =====================================
     if (message.content.startsWith("!")) {
-
         const validCommands = [
             "!com",
             "!allplayer",
             "!allserver",
             "!player",
-            "!dev"
+            "!dev",
         ];
 
         const usedCommand = command;
 
         if (!validCommands.includes(usedCommand)) {
-
             const embed = new EmbedBuilder()
-                .setColor(0xFF0000)
+                .setColor(0xff0000)
                 .setTitle("❌ Command Tidak Ditemukan")
                 .setDescription(
-                    `Command \`${usedCommand}\` tidak tersedia.\n\nGunakan \`!com\` untuk melihat daftar command yang tersedia.`
+                    `Command \`${usedCommand}\` tidak tersedia.\n\nGunakan \`!com\` untuk melihat daftar command yang tersedia.`,
                 )
                 .setFooter({
-                    text: "IndoFiveM Finder | Developed by Wizz"
+                    text: "IndoFiveM Finder | Developed by Wizz",
                 });
 
             return message.reply({ embeds: [embed] });
@@ -125,66 +123,63 @@ client.on("messageCreate", async (message) => {
     }
 
     if (command === "!com") {
-
         const embed = new EmbedBuilder()
             .setTitle("📖 Daftar Command Bot")
-            .setColor(0xFFD700)
+            .setColor(0xffd700)
             .setDescription("Berikut command yang tersedia:")
             .addFields(
                 {
                     name: "📋 !allserver",
-                    value: "Menampilkan semua daftar server."
+                    value: "Menampilkan semua daftar server.",
                 },
                 {
                     name: "👥 !allplayer <server>",
-                    value: "Menampilkan semua player online dari server tertentu.\nContoh: `!allplayer indozone`"
+                    value: "Menampilkan semua player online dari server tertentu.\nContoh: `!allplayer indozone`",
                 },
                 {
                     name: "👥 !player <server> <nama>",
-                    value: "Menampilkan informasi player dari server tertentu.\nContoh: `!player indozone Wizz`"
+                    value: "Menampilkan informasi player dari server tertentu.\nContoh: `!player indozone Wizz`",
                 },
                 {
                     name: "📖 !com",
-                    value: "Menampilkan daftar command yang tersedia."
+                    value: "Menampilkan daftar command yang tersedia.",
                 },
                 {
                     name: "👨‍💻 !dev",
-                    value: "Informasi tentang developer bot."
-                }
+                    value: "Informasi tentang developer bot.",
+                },
             )
             .setFooter({
-                text: "IndoFiveM Finder | Developed by Wizz"
+                text: "IndoFiveM Finder | Developed by Wizz",
             });
 
         return message.channel.send({ embeds: [embed] });
     }
 
     if (command === "!allserver") {
-
         const perPage = 10;
         const totalPages = Math.ceil(servers.length / perPage);
 
         for (let page = 1; page <= totalPages; page++) {
-
             const start = (page - 1) * perPage;
             const selected = servers.slice(start, start + perPage);
 
             const embed = new EmbedBuilder()
                 .setTitle(`📋 Daftar Server - Halaman ${page}`)
-                .setColor(0x00AEFF);
+                .setColor(0x00aeff);
 
-            selected.forEach(server => {
+            selected.forEach((server) => {
                 embed.addFields({
                     name: `🔎 ${server.name}`,
                     value:
                         `🆔 ID Server: ${server.id}\n` +
                         `🎯 key: \`${server.alias}\`\n` +
                         `Gunakan: \`!allplayer ${server.alias}\``,
-                    inline: false
+                    inline: false,
                 });
             });
             embed.setFooter({
-                text: `Halaman ${page}/${totalPages} | IndoFiveM Finder | Developed by Wizz`
+                text: `Halaman ${page}/${totalPages} | IndoFiveM Finder | Developed by Wizz`,
             });
 
             await message.channel.send({ embeds: [embed] });
@@ -193,7 +188,7 @@ client.on("messageCreate", async (message) => {
 
     function errorEmbed(description) {
         return new EmbedBuilder()
-            .setColor(0xFF0000)
+            .setColor(0xff0000)
             .setTitle("Terjadi Kesalahan")
             .setDescription(description)
             .setFooter({ text: "Bot Fivem RP Indonesia | Developed by Wizz" });
@@ -201,7 +196,7 @@ client.on("messageCreate", async (message) => {
 
     function warningEmbed(description) {
         return new EmbedBuilder()
-            .setColor(0xFFA500)
+            .setColor(0xffa500)
             .setTitle("Peringatan")
             .setDescription(description)
             .setFooter({ text: "IndoFiveM Finder | Developed by Wizz" });
@@ -211,20 +206,29 @@ client.on("messageCreate", async (message) => {
     // 👥 ALLPLAYER (FIXED)
     // =====================================
     if (command === "!allplayer") {
-
         const alias = args[1];
         if (!alias)
-            return message.reply({ embeds: [errorEmbed("Gunakan: `!allplayer <alias>`")] });
+            return message.reply({
+                embeds: [errorEmbed("Gunakan: `!allplayer <alias>`")],
+            });
 
-        const server = servers.find(s => s.alias === alias);
+        const server = servers.find((s) => s.alias === alias);
         if (!server)
-            return message.reply({ embeds: [errorEmbed("❌ Server tidak ditemukan.")] });
+            return message.reply({
+                embeds: [errorEmbed("❌ Server tidak ditemukan.")],
+            });
 
         const data = await getServerData(server.id);
         if (!data)
-            return message.reply({ embeds: [errorEmbed("❌ Server offline atau gagal ambil data.")] });
+            return message.reply({
+                embeds: [
+                    errorEmbed("❌ Server offline atau gagal ambil data."),
+                ],
+            });
         if (!data.players || data.players.length === 0)
-            return message.reply({ embeds: [warningEmbed("⚠️ Tidak ada player online.")] });
+            return message.reply({
+                embeds: [warningEmbed("⚠️ Tidak ada player online.")],
+            });
 
         // 🔽 SORT BY ID DESC
         const sortedPlayers = [...data.players].sort((a, b) => b.id - a.id);
@@ -235,21 +239,21 @@ client.on("messageCreate", async (message) => {
             return "🔴";
         }
 
-        const formattedPlayers = sortedPlayers.map(p =>
-            `${getPingIcon(p.ping)} [${p.id}] **${p.name}** (${p.ping}ms)`
+        const formattedPlayers = sortedPlayers.map(
+            (p) =>
+                `${getPingIcon(p.ping)} [${p.id}] **${p.name}** (${p.ping}ms)`,
         );
-
 
         const perPage = 40;
         const totalPages = Math.ceil(formattedPlayers.length / perPage);
 
         for (let page = 1; page <= totalPages; page++) {
-
             const start = (page - 1) * perPage;
             const pagePlayers = formattedPlayers.slice(start, start + perPage);
 
             const half = Math.ceil(pagePlayers.length / 2);
-            const leftColumn = pagePlayers.slice(0, half).join("\n") || "Kosong";
+            const leftColumn =
+                pagePlayers.slice(0, half).join("\n") || "Kosong";
             const rightColumn = pagePlayers.slice(half).join("\n") || "Kosong";
 
             const embed = new EmbedBuilder()
@@ -260,40 +264,55 @@ client.on("messageCreate", async (message) => {
                     {
                         name: "📊 Server Info",
                         value: `👥 ${data.clients} / ${data.sv_maxclients}`,
-                        inline: false
-                    }
+                        inline: false,
+                    },
                 )
-                .setColor(0x00FF00);
+                .setColor(0x00ff00);
 
             await message.channel.send({ embeds: [embed] });
         }
     }
 
     if (command === "!player") {
-
         const alias = args[1];
         const playerName = args.slice(2).join(" ");
 
         if (!alias || !playerName)
-            return message.reply({ embeds: [errorEmbed("❌ Gunakan: `!player <server> <nama>`")] });
+            return message.reply({
+                embeds: [errorEmbed("❌ Gunakan: `!player <server> <nama>`")],
+            });
 
-        const server = servers.find(s => s.alias === alias);
+        const server = servers.find((s) => s.alias === alias);
         if (!server)
-            return message.reply({ embeds: [errorEmbed("❌ Server tidak ditemukan.")] });
+            return message.reply({
+                embeds: [errorEmbed("❌ Server tidak ditemukan.")],
+            });
         const data = await getServerData(server.id);
         if (!data)
-            return message.reply({ embeds: [errorEmbed("❌ Server offline atau gagal ambil data.")] });
+            return message.reply({
+                embeds: [
+                    errorEmbed("❌ Server offline atau gagal ambil data."),
+                ],
+            });
 
         if (!data.players || data.players.length === 0)
-            return message.reply({ embeds: [warningEmbed("⚠️ Tidak ada player online.")] });
+            return message.reply({
+                embeds: [warningEmbed("⚠️ Tidak ada player online.")],
+            });
 
         // 🔍 Cari SEMUA player yang cocok (case insensitive)
-        const matchedPlayers = data.players.filter(p =>
-            p.name.toLowerCase().includes(playerName.toLowerCase())
+        const matchedPlayers = data.players.filter((p) =>
+            p.name.toLowerCase().includes(playerName.toLowerCase()),
         );
 
         if (matchedPlayers.length === 0)
-            return message.reply({ embeds: [errorEmbed("❌ Player tidak ditemukan atau sedang offline.")] });
+            return message.reply({
+                embeds: [
+                    errorEmbed(
+                        "❌ Player tidak ditemukan atau sedang offline.",
+                    ),
+                ],
+            });
 
         // 🔽 SORT BY ID DESC
         const sortedPlayers = matchedPlayers.sort((a, b) => b.id - a.id);
@@ -304,8 +323,9 @@ client.on("messageCreate", async (message) => {
             return "🔴";
         }
 
-        const formattedPlayers = sortedPlayers.map(p =>
-            `${getPingIcon(p.ping)} [${p.id}] **${p.name}** (${p.ping}ms)`
+        const formattedPlayers = sortedPlayers.map(
+            (p) =>
+                `${getPingIcon(p.ping)} [${p.id}] **${p.name}** (${p.ping}ms)`,
         );
 
         // 🔥 Batasi 30 per embed biar aman
@@ -313,20 +333,22 @@ client.on("messageCreate", async (message) => {
         const totalPages = Math.ceil(formattedPlayers.length / perPage);
 
         for (let page = 1; page <= totalPages; page++) {
-
             const start = (page - 1) * perPage;
             const pagePlayers = formattedPlayers.slice(start, start + perPage);
 
             const half = Math.ceil(pagePlayers.length / 2);
-            const leftColumn = pagePlayers.slice(0, half).join("\n") || "Kosong";
+            const leftColumn =
+                pagePlayers.slice(0, half).join("\n") || "Kosong";
             const rightColumn = pagePlayers.slice(half).join("\n") || "Kosong";
 
             const embed = new EmbedBuilder()
                 .setTitle(`🔎 Hasil Pencarian: "${playerName}"`)
-                .setDescription(`🏙 Server: **${server.name}**\n👥 Ditemukan: **${matchedPlayers.length} player**`)
+                .setDescription(
+                    `🏙 Server: **${server.name}**\n👥 Ditemukan: **${matchedPlayers.length} player**`,
+                )
                 .addFields(
                     { name: "👥 Player List", value: leftColumn, inline: true },
-                    { name: "‎", value: rightColumn, inline: true }
+                    { name: "‎", value: rightColumn, inline: true },
                 )
                 .setColor(0x3498db);
 
@@ -335,32 +357,30 @@ client.on("messageCreate", async (message) => {
     }
 
     if (command === "!dev") {
+        const embed = new EmbedBuilder()
+            .setColor(0x9b59b6)
+            .setTitle("👨‍💻 Developer Information")
+            .setDescription(
+                "Bot ini dibuat untuk memonitor server FiveM RP Indonesia secara realtime.\n\n" +
+                    "Jika ada bug atau ingin request fitur, silakan hubungi developer.",
+            )
+            .addFields(
+                {
+                    name: "👤 Developer",
+                    value: "**Wizz**",
+                    inline: true,
+                },
+                {
+                    name: "💬 Discord",
+                    value: "<@752554326907420672>",
+                    inline: true,
+                },
+            )
+            .setFooter({
+                text: "IndoFiveM Finder | Developed by Wizz",
+            })
+            .setTimestamp();
 
-    const embed = new EmbedBuilder()
-        .setColor(0x9B59B6)
-        .setTitle("👨‍💻 Developer Information")
-        .setDescription(
-            "Bot ini dibuat untuk memonitor server FiveM RP Indonesia secara realtime.\n\n" +
-            "Jika ada bug atau ingin request fitur, silakan hubungi developer."
-        )
-        .addFields(
-            {
-                name: "👤 Developer",
-                value: "**Wizz**",
-                inline: true
-            },
-            {
-                name: "💬 Discord",
-                value: "<@752554326907420672>", 
-                inline: true
-            },
-        )
-        .setFooter({
-            text: "IndoFiveM Finder | Developed by Wizz"
-        })
-        .setTimestamp();
-
-    return message.channel.send({ embeds: [embed] });
-}
+        return message.channel.send({ embeds: [embed] });
+    }
 });
-
