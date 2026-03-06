@@ -48,7 +48,7 @@ const servers = [
     { name: "INDOZONE", alias: "indozone", id: "jadyla" },
     { name: "HOPE", alias: "hope", id: "ymzj4j" },
     { name: "Town Glorix VII", alias: "glorix", id: "bjyd8b" },
-    { name: "SixNine", alias: "69", id: "eqgqzd" },
+    { name: "SixNine", alias: "69", id: "jjloml" },
     { name: "VICTORIA RP", alias: "victoria", id: "3qjvrz" },
     { name: "MERCY", alias: "mercy", id: "xj9l5r" },
     { name: "ABRP", alias: "abrp", id: "7y66bb" },
