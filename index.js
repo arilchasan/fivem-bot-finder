@@ -69,6 +69,7 @@ const servers = [
     { name: "VALORA", alias: "valora", id: "pbkkja" },
     { name: "CAKRA UNION", alias: "cakra", id: "xmdpve" },
     { name: "RETORIKA", alias: "retorika", id: "6j4z5j" },
+    { name: "SOM Roleplay Indonesia", alias: "som", id: "893d83" },
 ];
 
 // ================= FUNCTION CFX =================
