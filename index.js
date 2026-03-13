@@ -70,6 +70,7 @@ const servers = [
     { name: "CAKRA UNION", alias: "cakra", id: "xmdpve" },
     { name: "RETORIKA", alias: "retorika", id: "6j4z5j" },
     { name: "SOM Roleplay Indonesia", alias: "som", id: "893d83" },
+    { name: "KERTA969 Arena", alias: "kerta969", id: "mxk58q" },
 ];
 
 // ================= FUNCTION CFX =================
