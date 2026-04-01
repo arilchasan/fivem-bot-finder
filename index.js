@@ -71,6 +71,7 @@ const servers = [
     { name: "RETORIKA", alias: "retorika", id: "6j4z5j" },
     { name: "SOM Roleplay Indonesia", alias: "som", id: "893d83" },
     { name: "KERTA969 Arena", alias: "kerta969", id: "mxk58q" },
+    { name: "CR Roleplay", alias: "cr", id: "kr7k7d" },
 ];
 
 // ================= FUNCTION CFX =================
