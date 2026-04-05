@@ -62,6 +62,7 @@ const servers = [
     { name: "KERTA969 Arena", alias: "kerta969", id: "mxk58q" },
     { name: "CR Roleplay", alias: "cr", id: "kr7k7d" },
     { name: "Retro Roleplay", alias: "retro", id: "98y8l9y" },
+    { name: "Kisah Nusantara Roleplay", alias: "kn", id: "jj9zx4" },
 ];
 
 // ================= FUNCTION CFX =================
