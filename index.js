@@ -49,7 +49,7 @@ const servers = [
     { name: "SATU MIMPI", alias: "sm", id: "3e3gdb" },
     { name: "KOTABARU", alias: "kotabaru", id: "mez5p7" },
     { name: "MOXIE RP", alias: "moxie", id: "plky8m" },
-    { name: "LAST PARADISE RP", alias: "lp", id: "8rvzg5" },
+    { name: "LAST PARADISE RP", alias: "lp", id: "eql83a" },
     { name: "KAMPOENG", alias: "kampoeng", id: "55kd96" },
     { name: "AMORA STATE INDONESIA", alias: "amora", id: "lk6x85" },
     { name: "SENPAI FAMS PVP", alias: "senpai", id: "6abxd4" },
@@ -63,6 +63,7 @@ const servers = [
     { name: "CR Roleplay", alias: "cr", id: "kr7k7d" },
     { name: "Retro Roleplay", alias: "retro", id: "98y8l9y" },
     { name: "Kisah Nusantara Roleplay", alias: "kn", id: "jj9zx4" },
+    { name: "Garuda Prime Roleplay", alias: "garuda", id: "vgaqm5" },
 ];
 
 // ================= FUNCTION CFX =================
