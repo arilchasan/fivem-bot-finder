@@ -19,6 +19,15 @@ app.listen(PORT, "0.0.0.0", () => {
 
 // ===== CONFIG =====
 const TOKEN = process.env.TOKEN;
+const OWNER_ID = "752554326907420672";
+
+// ================= DEPLOY BOT =================
+const ALLOWED_GUILDS = [
+    "1478401276105461853",
+    "1379789649773334588",
+
+];
+
 
 // ================= INIT CLIENT =================
 const client = new Client({
@@ -80,8 +89,17 @@ async function getServerData(serverId) {
 }
 
 // ================= READY =================
-client.once("ready", () => {
+client.once("ready", async () => {
     console.log(`✅ Bot online sebagai ${client.user.tag}`);
+
+    for (const guild of client.guilds.cache.values()) {
+        if (!ALLOWED_GUILDS.includes(guild.id)) {
+            console.log(`❌ Keluar dari server ilegal: ${guild.name} (${guild.id})`);
+            await guild.leave();
+        } else {
+            console.log(`✅ Diizinkan: ${guild.name}`);
+        }
+    }
 
     client.user.setPresence({
         activities: [
@@ -96,6 +114,53 @@ client.once("ready", () => {
 });
 
 client.login(process.env.TOKEN);
+client.on("guildCreate", async (guild) => {
+    if (!ALLOWED_GUILDS.includes(guild.id)) {
+        console.log(`🚨 Server ilegal: ${guild.name} (${guild.id})`);
+
+        let inviter = "Tidak diketahui";
+
+        try {
+            // 🔍 Ambil audit log
+            const logs = await guild.fetchAuditLogs({
+                limit: 1,
+                type: 28 // BOT_ADD
+            });
+
+            const entry = logs.entries.first();
+
+            if (entry && entry.executor) {
+                inviter = `${entry.executor.tag} (${entry.executor.id})`;
+            }
+        } catch (err) {
+            console.log("❌ Gagal ambil audit log");
+        }
+
+        try {
+            // 📩 Kirim DM ke owner
+            const owner = await client.users.fetch(OWNER_ID);
+
+            const embed = new EmbedBuilder()
+                .setColor(0xff0000)
+                .setTitle("🚨 Bot Diinvite ke Server Ilegal")
+                .addFields(
+                    { name: "🏷 Nama Server", value: guild.name, inline: true },
+                    { name: "🆔 Server ID", value: guild.id, inline: true },
+                    { name: "👥 Member", value: `${guild.memberCount}`, inline: true },
+                    { name: "👤 Diinvite oleh", value: inviter, inline: false }
+                )
+                .setTimestamp();
+
+            await owner.send({ embeds: [embed] });
+
+        } catch (err) {
+            console.log("❌ Gagal kirim DM ke owner");
+        }
+
+        // ❌ keluar dari server ilegal
+        await guild.leave();
+    }
+});
 
 // ================= COMMAND =================
 client.on("messageCreate", async (message) => {
@@ -114,6 +179,8 @@ client.on("messageCreate", async (message) => {
             "!allserver",
             "!player",
             "!dev",
+            "!servers",
+            "!leaveall",
         ];
 
         const usedCommand = command;
@@ -373,7 +440,7 @@ client.on("messageCreate", async (message) => {
             .setTitle("👨‍💻 Developer Information")
             .setDescription(
                 "Bot ini dibuat untuk memonitor server FiveM RP Indonesia secara realtime.\n\n" +
-                    "Jika ada bug atau ingin request fitur, silakan hubungi developer.",
+                "Jika ada bug atau ingin request fitur, silakan hubungi developer.",
             )
             .addFields(
                 {
@@ -393,5 +460,61 @@ client.on("messageCreate", async (message) => {
             .setTimestamp();
 
         return message.channel.send({ embeds: [embed] });
+    }
+
+    if (command === "!servers") {
+        if (message.author.id !== OWNER_ID) return;
+
+        const guilds = client.guilds.cache;
+
+        if (guilds.size === 0) {
+            return message.channel.send("Bot tidak ada di server manapun.");
+        }
+
+        const list = guilds
+            .map(g => `• **${g.name}**\nID: ${g.id}`)
+            .join("\n\n");
+
+        const embed = new EmbedBuilder()
+            .setColor(0x00aeff)
+            .setTitle("📋 List Server Bot")
+            .setDescription(list)
+            .setFooter({
+                text: `Total: ${guilds.size} server`,
+            })
+            .setTimestamp();
+
+        return message.channel.send({ embeds: [embed] });
+    }
+    if (command === "!leaveall") {
+        if (message.author.id !== OWNER_ID) return;
+
+        const embedStart = new EmbedBuilder()
+            .setColor(0xff0000)
+            .setTitle("⚠️ Leave All Server")
+            .setDescription("Bot sedang keluar dari semua server...")
+            .setTimestamp();
+
+        await message.channel.send({ embeds: [embedStart] });
+
+        let count = 0;
+
+        for (const guild of client.guilds.cache.values()) {
+            try {
+                console.log(`Keluar dari ${guild.name}`);
+                await guild.leave();
+                count++;
+            } catch (err) {
+                console.log(`Gagal keluar dari ${guild.name}`);
+            }
+        }
+
+        const embedDone = new EmbedBuilder()
+            .setColor(0x00ff00)
+            .setTitle("✅ Selesai")
+            .setDescription(`Bot berhasil keluar dari **${count} server**.`)
+            .setTimestamp();
+
+        message.channel.send({ embeds: [embedDone] });
     }
 });
