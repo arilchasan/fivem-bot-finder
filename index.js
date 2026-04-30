@@ -25,9 +25,8 @@ const OWNER_ID = "752554326907420672";
 const ALLOWED_GUILDS = [
     "1478401276105461853",
     "1379789649773334588",
-
+    "729650761008676925",
 ];
-
 
 // ================= INIT CLIENT =================
 const client = new Client({
@@ -94,7 +93,9 @@ client.once("ready", async () => {
 
     for (const guild of client.guilds.cache.values()) {
         if (!ALLOWED_GUILDS.includes(guild.id)) {
-            console.log(`❌ Keluar dari server ilegal: ${guild.name} (${guild.id})`);
+            console.log(
+                `❌ Keluar dari server ilegal: ${guild.name} (${guild.id})`,
+            );
             await guild.leave();
         } else {
             console.log(`✅ Diizinkan: ${guild.name}`);
@@ -124,7 +125,7 @@ client.on("guildCreate", async (guild) => {
             // 🔍 Ambil audit log
             const logs = await guild.fetchAuditLogs({
                 limit: 1,
-                type: 28 // BOT_ADD
+                type: 28, // BOT_ADD
             });
 
             const entry = logs.entries.first();
@@ -146,13 +147,16 @@ client.on("guildCreate", async (guild) => {
                 .addFields(
                     { name: "🏷 Nama Server", value: guild.name, inline: true },
                     { name: "🆔 Server ID", value: guild.id, inline: true },
-                    { name: "👥 Member", value: `${guild.memberCount}`, inline: true },
-                    { name: "👤 Diinvite oleh", value: inviter, inline: false }
+                    {
+                        name: "👥 Member",
+                        value: `${guild.memberCount}`,
+                        inline: true,
+                    },
+                    { name: "👤 Diinvite oleh", value: inviter, inline: false },
                 )
                 .setTimestamp();
 
             await owner.send({ embeds: [embed] });
-
         } catch (err) {
             console.log("❌ Gagal kirim DM ke owner");
         }
@@ -440,7 +444,7 @@ client.on("messageCreate", async (message) => {
             .setTitle("👨‍💻 Developer Information")
             .setDescription(
                 "Bot ini dibuat untuk memonitor server FiveM RP Indonesia secara realtime.\n\n" +
-                "Jika ada bug atau ingin request fitur, silakan hubungi developer.",
+                    "Jika ada bug atau ingin request fitur, silakan hubungi developer.",
             )
             .addFields(
                 {
@@ -472,7 +476,7 @@ client.on("messageCreate", async (message) => {
         }
 
         const list = guilds
-            .map(g => `• **${g.name}**\nID: ${g.id}`)
+            .map((g) => `• **${g.name}**\nID: ${g.id}`)
             .join("\n\n");
 
         const embed = new EmbedBuilder()
