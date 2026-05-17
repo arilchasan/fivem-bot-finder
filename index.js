@@ -11,7 +11,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
-    res.send("Bot is running!");
+    res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndoFiveM Finder Bot</title>
+  <meta name="description" content="IndoFiveM Finder is a Discord bot for monitoring FiveM RP Indonesia servers in real time. Check player counts, search players, and view server lists.">
+</head>
+<body>
+  <h1>IndoFiveM Finder Bot is running!</h1>
+  <p>This Discord bot monitors FiveM RP Indonesia servers in real time.</p>
+</body>
+</html>`);
 });
 app.listen(PORT, "0.0.0.0", () => {
     console.log("Web server aktif di port " + PORT);
