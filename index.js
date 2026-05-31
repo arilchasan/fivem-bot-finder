@@ -51,28 +51,24 @@ const client = new Client({
 
 // ================= SERVER LIST =================
 const servers = [
-    { name: "IDP", alias: "idp", id: "bak4pl" },
+    { name: "IDP", alias: "idp", id: "vgaqm5" },
     { name: "EXECUTIVE 2.0", alias: "exe", id: "roek67" },
     { name: "KOTABARU", alias: "kb", id: "mez5p7" },
     { name: "NUSA V INDONESIA", alias: "nv", id: "ele3bm" },
-    { name: "JING ARENA INDONESIA", alias: "jing", id: "6gqrq4" },
-    { name: "V3 PVP", alias: "v3", id: "y84779" },
+    { name: "JING ARENA INDONESIA", alias: "jing", id: "98yrzem" },
     { name: "KOTAKITA", alias: "kotkit", id: "r35px8" },
     { name: "IME RP", alias: "ime", id: "zrvmg4" },
     { name: "CERITA KITA", alias: "ck", id: "zxmea5" },
     { name: "INDOZONE", alias: "indozone", id: "jadyla" },
     { name: "HOPE", alias: "hope", id: "ymzj4j" },
     { name: "Town Glorix VII", alias: "glorix", id: "bjyd8b" },
-    { name: "SixNine", alias: "69", id: "qldge6" },
     { name: "VICTORIA RP", alias: "victoria", id: "3qjvrz" },
     { name: "MERCY", alias: "mercy", id: "xj9l5r" },
     { name: "SATU MIMPI", alias: "sm", id: "3e3gdb" },
-    { name: "KOTABARU", alias: "kotabaru", id: "mez5p7" },
     { name: "MOXIE RP", alias: "moxie", id: "plky8m" },
     { name: "LAST PARADISE RP", alias: "lp", id: "eql83a" },
     { name: "KAMPOENG", alias: "kampoeng", id: "55kd96" },
     { name: "AMORA STATE INDONESIA", alias: "amora", id: "lk6x85" },
-    { name: "SENPAI FAMS PVP", alias: "senpai", id: "6abxd4" },
     { name: "ORIGAMI RP", alias: "origami", id: "plj9dy" },
     { name: "OUR GLORY", alias: "ourglory", id: "55k88a" },
     { name: "DayDream", alias: "daydream", id: "4zqglv" },
@@ -85,13 +81,14 @@ const servers = [
     { name: "Kisah Nusantara Roleplay", alias: "kn", id: "gad5d7z" },
     { name: "Garuda Prime Roleplay", alias: "garuda", id: "vgaqm5" },
     { name: "Rumah Kita Roleplay", alias: "rk", id: "bdx4lql" },
+    { name: "Solaris Roleplay", alias: "solaris", id: "da5dzj" },
 ];
 
 // ================= FUNCTION CFX =================
 async function getServerData(serverId) {
     try {
         const res = await axios.get(
-            `https://servers-frontend.fivem.net/api/servers/single/${serverId}`,
+            `https://frontend.cfx-services.net/api/servers/single/${serverId}`,
             { timeout: 5000 },
         );
         return res.data.Data;
@@ -266,10 +263,7 @@ client.on("messageCreate", async (message) => {
             selected.forEach((server) => {
                 embed.addFields({
                     name: `🔎 ${server.name}`,
-                    value:
-                        `🆔 ID Server: ${server.id}\n` +
-                        `🎯 key: \`${server.alias}\`\n` +
-                        `Gunakan: \`!allplayer ${server.alias}\``,
+                    value: `Gunakan: \`!allplayer ${server.alias}\``,
                     inline: false,
                 });
             });
